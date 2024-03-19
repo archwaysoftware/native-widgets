@@ -3,7 +3,7 @@ import { ActionValue, ValueStatus, Option } from "mendix";
 import { Icon } from "mendix/components/native/Icon";
 import { Component, createElement, createRef } from "react";
 import { ActivityIndicator, Platform, View } from "react-native";
-import MapView, { LatLng, Marker as MarkerView } from "react-native-maps";
+import MapView, { LatLng, Marker as MarkerView, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from "react-native-maps";
 import { Big } from "big.js";
 
 import { DefaultZoomLevelEnum, DynamicMarkersType, MapsProps, MarkersType } from "../typings/MapsProps";
@@ -75,7 +75,7 @@ export class Maps extends Component<Props, State> {
                 {this.state.status !== Status.LoadingMarkers ? (
                     <MapView
                         ref={this.mapViewRef}
-                        provider={this.props.provider === "default" ? null : this.props.provider}
+                        provider={this.props.provider === "default" ? PROVIDER_DEFAULT : PROVIDER_GOOGLE}
                         mapType={this.props.mapType}
                         showsUserLocation={this.props.showsUserLocation}
                         showsMyLocationButton={this.props.showsUserLocation}
@@ -88,9 +88,10 @@ export class Maps extends Component<Props, State> {
                         zoomEnabled={this.props.interactive}
                         style={{ flex: 1, alignSelf: "stretch" }}
                         liteMode={!this.props.interactive}
-                        cacheEnabled={!this.props.interactive}
+                        // cacheEnabled={!this.props.interactive}
                         showsPointsOfInterest={false}
                         mapPadding={{ top: 48, right: 48, bottom: 48, left: 48 }}
+                        toolbarEnabled={false}
                         onMapReady={this.onMapReadyHandler}
                         onRegionChangeComplete={this.onRegionChangeCompleteHandler}
                     >
